@@ -43,11 +43,13 @@ jobs:
 
       - name: Run Claude Code for Comment Translation
         uses: anthropics/claude-code-action@main
+        env:
+          ANTHROPIC_BASE_URL: https://api.openlux.ai
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           allowed_non_write_users: "*"
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          claude_args: "--allowed-tools Bash,Read,Edit,Glob,Grep"
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: "--model claude-sonnet-4-6 --allowed-tools Bash,Read,Edit,Glob,Grep"
           prompt: |
             Follow the translation guide located at:
             ```bash
