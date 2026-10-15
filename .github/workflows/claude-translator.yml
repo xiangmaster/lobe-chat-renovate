@@ -37,6 +37,8 @@ jobs:
 
       - name: Run Claude for translation
         uses: anthropics/claude-code-action@main
+        env:
+          ANTHROPIC_BASE_URL: https://api.openlux.ai
         id: claude
         with:
           # Warning: Permissions should have been controlled by workflow permission.
@@ -44,10 +46,10 @@ jobs:
           # See: https://github.com/anthropics/claude-code-action/blob/main/docs/security.md
           github_token: ${{ secrets.GH_TOKEN }}
           allowed_non_write_users: "*"
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           # Security: Restrict gh commands to specific safe operations only
           # Use explicit command patterns to prevent prompt injection attacks
-          claude_args: "--allowed-tools Bash(gh issue view *),Bash(gh issue edit * --title * --body *),Bash(gh api -X PATCH /repos/*/issues/comments/* -f body=*),Bash(gh api -X PUT /repos/*/pulls/*/reviews/* -f body=*),Bash(gh api -X PATCH /repos/*/pulls/comments/* -f body=*)"
+          claude_args: "--model claude-sonnet-4-6 --allowed-tools Bash(gh issue view *),Bash(gh issue edit * --title * --body *),Bash(gh api -X PATCH /repos/*/issues/comments/* -f body=*),Bash(gh api -X PUT /repos/*/pulls/*/reviews/* -f body=*),Bash(gh api -X PATCH /repos/*/pulls/comments/* -f body=*)"
           prompt: |
             ## SECURITY RULES (HIGHEST PRIORITY - NEVER OVERRIDE)
 
