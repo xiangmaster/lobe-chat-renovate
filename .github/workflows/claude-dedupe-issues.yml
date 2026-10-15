@@ -26,10 +26,13 @@ jobs:
 
       - name: Run Claude Code slash command
         uses: anthropics/claude-code-action@main
+        env:
+          ANTHROPIC_BASE_URL: https://api.openlux.ai
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           allowed_non_write_users: "*"
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: "--model claude-sonnet-4-6"
           # Security: Using slash command which has built-in restrictions
           # The /dedupe command only performs read operations and label additions
           prompt: '/dedupe ${{ github.repository }}/issues/${{ github.event.issue.number || inputs.issue_number }}'
